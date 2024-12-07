@@ -1,0 +1,22 @@
+<h2>座席一覧</h2>
+
+<table>
+
+  <thead>
+    <tr>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+      </thead>
+    <tbody>
+     <% @sheets.group_by(&:row).each do |row, sheets| %>
+      <tr>
+        <% sheets.each do |sheet| %>
+          <td><%= "#{sheet.row}-#{sheet.column}" %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+
+</table>

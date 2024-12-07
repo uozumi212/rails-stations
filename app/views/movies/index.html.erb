@@ -1,0 +1,38 @@
+<h2>映画タイトル</h2>
+
+<%= form_with url: movies_path, method: :get, local: true do |f| %>
+  <%= f.text_field :keyword, value: @keyword, placeholder: "映画タイトルを入力" %>
+
+  <%= f.radio_button :is_showing, '', checked: params[:is_showing].blank? %>
+  <%= f.label :is_showing_all, "全て" %>
+
+  <%= f.radio_button :is_showing, 'true', checked: params[:is_showing] == 'true' %>
+  <%= f.label :is_showing_true, "公開中" %>
+
+ <%= f.radio_button :is_showing, 'false', checked: params[:is_showing] == 'false' %>
+    <%= f.label :status, "上映予定" %>
+
+  <%= f.submit "検索" %>
+<% end %>
+
+<% @movies.each do |movie| %>
+<p>
+  Title:<%= movie.name %>
+</p>
+<p>
+  公開年：<%= movie.year %>
+</p>
+<p>
+  コメント：<%= movie.description %>
+</p>
+<img src="<%= movie.image_url %>" alt="<%= movie.name %>のポスター">
+<p>
+  公開ステータス：
+  <% if movie.is_showing == true %>
+  公開中
+  <% else %>
+  上映予定
+  <% end %>
+</p>
+
+<% end %>

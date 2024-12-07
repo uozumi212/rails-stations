@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      movie: 映画
+    attributes:
+      movie:
+        name: タイトル
+        year: 公開年
+        description: 概要
+        image_url: 画像URL
+        is_showing: 上映中
+    errors:
+      models:
+        # movie: # モデル名を指定
+        #   attributes:
+        #     name:
+        #       blank: "を入力してください"
+        #       taken: "はすでに使用されています"
+        #     year:
+        #       blank: "を入力してください"
+        #     description:
+        #       blank: "を入力してください"
+        #     image_url:
+        #       blank: "を入力してください"
+        #     is_showing:
+        #       inclusion: "かどうかを選択してください"
