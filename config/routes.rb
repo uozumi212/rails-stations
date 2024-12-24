@@ -6,14 +6,32 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # 一般ユーザー向けのルート
-  resources :movies
+  resources :movies do
+    member do
+      get 'reservation'
+    end
+    resources :schedules do
+      resources :reservations
+    end
+    get 'reservation', to: 'reservations#new', as: 'reservation'
+  end
+
 
   # 管理者向けのルート
   namespace :admin do
-    resources :movies
+    get 'schedules/index'
+    resources :movies do
+        resources :schedules
+        resources :reservations
+    end
+    resources :schedules
+    resources :reservations
   end
 
   resources :sheets
+
+  resources :reservations
+
 # , only: [:new, :create]
   # Defines the root path route ("/")
   # root "posts#index"

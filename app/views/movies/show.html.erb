@@ -1,0 +1,36 @@
+<h2>映画詳細ページ</h2>
+
+<p>タイトル：<%= @movie.name %></p>
+<p>公開年：<%= @movie.year %></p>
+<p>コメント：<%= @movie.description %></p>
+<img src="<%= @movie.image_url %>" alt="<%= @movie.name %>">
+
+
+<h3>上映スケジュール</h3>
+
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
+<% end %>
+
+<% @schedules.each do |schedule| %>
+  <p>開始時間：<%= schedule.start_time.strftime('%H:%M') %> - 終了時間： <%= schedule.end_time.strftime('%H:%M') %></p>
+  <%= form_with url: reservation_movie_path(@movie), method: :get, local: true do |f| %>
+
+  <div>
+    <%= f.label :date, "日付を選択" %>
+    <%= f.select :date, options_for_select((Date.today..Date.today + 6.days).map { |date| [date.strftime('%Y-%m-%d'), date] }) %>
+  </div>
+
+   <div>
+    <%= f.label :schedule_id, "上映時間を選択" %>
+    <%= f.select :schedule_id, options_from_collection_for_select(@movie.schedules, :id, lambda { |schedule| schedule.start_time.strftime('%H:%M') },  prompt: "上映時間を選択してください。")  %>
+   </div>
+
+
+   <%= f.submit '座席を予約する' %>
+  <% end %>
+<% end %>

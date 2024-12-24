@@ -1,0 +1,28 @@
+<h1>座席予約 - <%= @movie.name %></h1>
+<p>日付： <%= @date %></p>
+
+<% if @schedules.present? %>
+  <% @schedules.each do |schedule| %>
+    <p>上映時間：<%= schedule.start_time.strftime('%H:%M') %> - 終了時間： <%= schedule.end_time.strftime('%H:%M') %></p>
+    <table>
+      <% @sheets.each do |sheet| %>
+        <tr>
+          <% sheet.column.to_s.split("").each_with_index do |column, column_index| %>
+            <td>
+              <% sheet.row.to_s.split("").each_with_index do |row, row_index| %>
+                <% seat_number = "#{row}#{column}" %>
+                <% if @reserved_sheets.include?(sheet.id) %>
+                  <%= sheet.id %>：<span style="background-color: gray"><%= "座席#{seat_number}" %>(予約済み)</span>
+                <% else %>
+                 <%= sheet.id %>：<%= link_to "座席#{seat_number}", new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id, date: @date, sheet_id: sheet.id) %>
+               <% end %>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+<% else %>
+  <p>指定された日付のスケジュールがありません。</p>
+<% end %>

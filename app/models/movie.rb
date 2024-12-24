@@ -4,6 +4,8 @@ class Movie < ApplicationRecord
   validates :description, presence: true
   validates :image_url, presence: true
 
+  has_many :schedules, dependent: :destroy
+
   scope :search, ->(keyword) {
     where("name LIKE :keyword OR description LIKE :keyword", keyword: "%#{keyword}%")
   }

@@ -1,0 +1,61 @@
+<h2>予約編集画面</h2>
+
+<%= form_with(model: [:admin, @reservation], local: true) do |form| %>
+ <% if @reservation.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+      <% @reservation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+ <% end %>
+
+    <div class="field">
+      <%= form.label :movie_id, "タイトル" %>
+      <%= form.select :movie_id, @movies, selected: @reservation.schedule.movie.id, value: form.object.schedule.movie.name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :sheet, "座席" %>
+      <%= form.select :sheet_id, @sheets.map { |s| [s.row.to_s + "-" + s.column.to_s, s.id]}, { selected: @reservation.sheet.id}, { prompt: "選択してください。"} %>
+    </div>
+
+      <%= form.label :date, "予約日付" %>
+      <%= form.select :date, @dates, { selected: @reservation.date.strftime("%Y-%m-%d")}, prompt:  "予約日付を選択してください。" %>
+      </div>
+
+      <div>
+        <%= form.label :schedule_id, "予約開始時間" %>
+        <%= form.select :schedule_id, @schedules, { selected: @reservation.schedule.start_time.strftime("%H:%M")},  prompt:  "予約開始時間を選択してください。" %>
+      </div>
+
+    <div class="field">
+      <%= form.label :name, "名前" %>
+      <%= form.text_field :name, value: @reservation.name %>
+    </div>
+
+    <div class="field">
+      <%= form.label :email, "メールアドレス" %>
+      <%= form.text_field :email, value: @reservation.email %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "更新" %>
+    </div>
+
+    <% if flash[:error] %>
+      <p style="color:red;"><%= flash[:error] %></p>
+    <% end %>
+
+    <% if flash[:success] %>
+      <p style="color:green;"><%= flash[:success] %></p>
+    <% end %>
+<% end %>
+
+<div style="padding: 20px 0;">
+  <%= link_to '戻る', admin_movies_path %>
+</div>
+
+
+<%= button_to '削除', admin_reservation_path(@reservation), method: :delete, data: { turbo_confirm: "本当に削除しますか？" } %>

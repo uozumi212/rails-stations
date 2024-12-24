@@ -1,8 +1,14 @@
 module Admin
  class MoviesController < ApplicationController
+
   def index
     @movies = Movie.all
+    @schedules = []
+    @movies.each do |movie|
+      @schedules << movie.schedules
+    end
   end
+
 
   def new
     @movie = Movie.new
@@ -11,6 +17,12 @@ module Admin
   def edit
     @movie = Movie.find(params[:id])
   end
+
+  def show
+    @movie = Movie.find(params[:id])
+    @schedules = @movie.schedules
+  end
+
 
   def update
     @movie = Movie.find(params[:id])

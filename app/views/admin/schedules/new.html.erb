@@ -1,0 +1,12 @@
+<h2>管理者用上映スケジュール新規登録</h2>
+
+<%= form_for([:admin, @schedule]) do |f| %>
+<h3>映画タイトル：<%= @movie.name %></h3>
+  <!-- <%= f.label :movie_id, "映画" %>
+  <%= f.select :movie_id, Movie.all.map { |movie| [movie.name, movie.id] } %> -->
+  <%= f.label :start_time, "開始時間" %>
+  <%= f.datetime_field :start_time %>
+  <%= f.label :end_time, "終了時間" %>
+  <%= f.datetime_field :end_time %>
+  <%= f.submit "登録" %>
+<% end %>
