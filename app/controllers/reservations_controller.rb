@@ -1,8 +1,14 @@
 class ReservationsController < ApplicationController
 
   def new
-    @movie = Movie.find(params[:movie_id])
-    @schedule = Schedule.find(params[:schedule_id])
+    @movie = Movie.find_by(id: params[:movie_id])
+    @schedule = Schedule.find_by(id: params[:schedule_id])
+
+    unless @movie && @schedule
+      redirect_to movies_path, alert: "映画またはスケジュールを選択してください"
+      return
+    end
+
     @date = params[:date]
     @sheet_id = params[:sheet_id]
 
@@ -23,6 +29,7 @@ class ReservationsController < ApplicationController
     @schedule = Schedule.find(params[:reservation][:schedule_id])
     @sheet = Sheet.find(params[:reservation][:sheet_id])
     @movie = @schedule.movie
+    @screen_id = @sheet.screen_id
 
     existing_reservation = Reservation.find_by(schedule: @schedule, sheet: @sheet)
 

@@ -14,7 +14,7 @@
                 <% if @reserved_sheets.include?(sheet.id) %>
                   <%= sheet.id %>：<span style="background-color: gray"><%= "座席#{seat_number}" %>(予約済み)</span>
                 <% else %>
-                 <%= sheet.id %>：<%= link_to "座席#{seat_number}", new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id, date: @date, sheet_id: sheet.id) %>
+                 <%= sheet.id %>：<%= link_to "座席#{seat_number}", new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id, date: @date, sheet_id: sheet.id, screen_id: sheet.screen_id) %>
                <% end %>
               <% end %>
             </td>

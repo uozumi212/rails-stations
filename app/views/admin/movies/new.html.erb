@@ -1,5 +1,14 @@
 <h2>新規登録</h2>
 
+
+    <% if flash[:error] %>
+      <p style="color:red;"><%= flash[:error] %></p>
+    <% end %>
+
+    <% if flash[:success] %>
+      <p style="color:green;"><%= flash[:success] %></p>
+    <% end %>
+
 <%= form_with(model: @movie, url: admin_movies_path, local: true) do |form| %>
  <% if @movie.errors.any? %>
   <div id="error_explanation">
@@ -40,11 +49,4 @@
       <%= form.submit "登録" %>
     </div>
 
-    <% if flash[:error] %>
-      <p style="color:red;"><%= flash[:error] %></p>
-    <% end %>
-
-    <% if flash[:success] %>
-      <p style="color:green;"><%= flash[:success] %></p>
-    <% end %>
 <% end %>

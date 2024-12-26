@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'faker'
+require_relative 'seeds/screens'
 require_relative 'seeds/movies'
 require_relative 'seeds/sheets'
 # require_relative 'seeds/schedules.rb'

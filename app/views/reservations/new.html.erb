@@ -20,11 +20,13 @@
 <% end %>
 
 <%= form_with model: @reservation, url: reservations_path, method: :post, local: true do |f| %>
-  <div>
-    <strong>映画：</strong>  <%= @movie.name %>
-  <!-- <%= f.label :movie_id %> -->
-  <%= f.hidden_field :movie_id, value: @movie.id %>
-  </div>
+   <% if !@movie.nil? %>
+    <div>
+        <strong>映画：</strong>
+      <%= f.text_field :movie_id, value: @movie.name, readonly: true %>
+      <%= f.hidden_field :movie_id, value: @movie.id %>
+    </div>
+    <% end %>
 
   <div>
   <%= f.label :schedule_id %>

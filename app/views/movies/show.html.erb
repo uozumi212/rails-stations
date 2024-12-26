@@ -18,7 +18,9 @@
 
 <% @schedules.each do |schedule| %>
   <p>開始時間：<%= schedule.start_time.strftime('%H:%M') %> - 終了時間： <%= schedule.end_time.strftime('%H:%M') %></p>
-  <%= form_with url: reservation_movie_path(@movie), method: :get, local: true do |f| %>
+
+  <% end %>
+    <%= form_with url: reservation_movie_path(@movie), method: :get, local: true do |f| %>
 
   <div>
     <%= f.label :date, "日付を選択" %>
@@ -32,5 +34,4 @@
 
 
    <%= f.submit '座席を予約する' %>
-  <% end %>
 <% end %>

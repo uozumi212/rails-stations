@@ -1,6 +1,14 @@
 puts "Create movies and shedules"
-Movie.destroy_all
+
+ActiveRecord::Base.connection.execute("SET FOREIGN_KEY_CHECKS = 0")
+
+Reservation.destroy_all
 Schedule.destroy_all
+Movie.destroy_all
+
+ActiveRecord::Base.connection.execute("SET FOREIGN_KEY_CHECKS = 1")
+
+# screen_ids = Screen.pluck(:id)
 
 10.times do |n|
   Movie.create!(
@@ -9,6 +17,7 @@ Schedule.destroy_all
     description: "sample #{n+1}",
     image_url: Faker::LoremFlickr.image(size: "300x300", search_terms: ['movie']),
     is_showing: [true, false].sample,
+    # screen_id: screen_ids.sample
   )
 end
 

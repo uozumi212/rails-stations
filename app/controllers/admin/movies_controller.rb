@@ -12,6 +12,7 @@ module Admin
 
   def new
     @movie = Movie.new
+    # @screens = Screen.all
   end
 
   def edit
@@ -36,6 +37,25 @@ module Admin
 
   def create
     @movie = Movie.new(movie_params)
+    #  @screens = Screen.all
+
+    # existing_movie = Movie.find_by(name: @movie.name)
+
+    # if existing_movie
+    #   if existing_movie.screen_id == 1
+    #     new_screen_id = 2
+    #   elsif existing_movie.screen_id == 2
+    #     new_screen_id = 3
+    #   elsif existing_movie.screen_id == 3
+    #     flash.now[:error] = 'スクリーンはすでに使われています。'
+    #     render :new and return
+    #   end
+    # else
+    #   new_screen_id = 1
+    # end
+
+    # @movie.screen_id = new_screen_id
+
     if @movie.save
       redirect_to admin_movies_path, flash: { success:  '正常に映画が登録されました。' }
     else
