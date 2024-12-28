@@ -1,0 +1,23 @@
+<h1>ユーザー登録ページ</h1>
+
+<%= form_with model: @user, url: new_users_path, method: :post, local: true do |f| %>
+  <div>
+    <%= f.label :名前 %>
+    <%= f.text_field :name, required: true %>
+  </div>
+  <div>
+    <%= f.label :メールアドレス %>
+    <%= f.text_field :email, required: true  %>
+  </div>
+  <div>
+    <%= f.label :パスワード %>
+    <%= f.password_field :password, required: true  %>
+  </div>
+  <div>
+    <%= f.label :確認用パスワード %>
+    <%= f.password_field :password_confirmation, required: true  %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
