@@ -1,37 +1,48 @@
-<h2>映画詳細ページ</h2>
+<h2 class="text-center text-2xl mt-4">映画詳細ページ</h2>
 
-<p>タイトル：<%= @movie.name %></p>
-<p>公開年：<%= @movie.year %></p>
-<p>コメント：<%= @movie.description %></p>
-<img src="<%= @movie.image_url %>" alt="<%= @movie.name %>">
+<div class="flex movie-list max-w-4xl mx-auto mt-8">
+  <div class="w-1/3">
+    <%= image_tag @movie.image_url, alt: "#{@movie.name}のポスター", class: "w-full h-auto" %>
+  </div>
+  <div class="w-2/3 pl-8">
+    <h3 class="text-2xl font-bold"><%= @movie.name %></h3>
+    <p class="text-gray-600 mt-2"><%= @movie.year %></p>
+    <p class="mt-4"><%= @movie.description %></p>
+  </div>
+</div>
 
+<div class="text-center max-w-2xl mx-auto mt-12">
+  <h3 class="text-xl font-semibold mb-4">上映スケジュール</h3>
 
-<h3>上映スケジュール</h3>
-
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
-
-<% if flash[:error] %>
-  <p><%= flash[:error] %></p>
-<% end %>
-
-<% @schedules.each do |schedule| %>
-  <p>開始時間：<%= schedule.start_time.strftime('%H:%M') %> - 終了時間： <%= schedule.end_time.strftime('%H:%M') %></p>
-
+  <% if flash[:notice] %>
+    <p class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"><%= flash[:notice] %></p>
   <% end %>
-    <%= form_with url: reservation_movie_path(@movie), method: :get, local: true do |f| %>
 
-  <div>
-    <%= f.label :date, "日付を選択" %>
-    <%= f.select :date, options_for_select((Date.today..Date.today + 6.days).map { |date| [date.strftime('%Y-%m-%d'), date] }) %>
+  <% if flash[:error] %>
+    <p class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"><%= flash[:error] %></p>
+  <% end %>
+
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    <% @schedules.each do |schedule| %>
+      <div class="bg-gray-100 p-4 rounded">
+        <p><%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>
+      </div>
+    <% end %>
   </div>
 
-   <div>
-    <%= f.label :schedule_id, "上映時間を選択" %>
-    <%= f.select :schedule_id, options_from_collection_for_select(@movie.schedules, :id, lambda { |schedule| schedule.start_time.strftime('%H:%M') },  prompt: "上映時間を選択してください。")  %>
-   </div>
+  <%= form_with url: reservation_movie_path(@movie), method: :get, local: true, class: "mt-8" do |f| %>
+    <div class="mb-4 flex justify-center">
+      <%= f.label :date, "日付を選択：", class: "font-medium text-gray-700" %>
+      <%= f.select :date, options_for_select((Date.today..Date.today + 6.days).map { |date| [date.strftime('%Y-%m-%d'), date] }), {}, class: "pl-3 pr-10 bg-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" %>
+    </div>
 
+    <div class="mb-4 flex justify-center">
+      <%= f.label :schedule_id, "上映時間を選択：", class: "font-medium text-gray-700" %>
+      <%= f.select :schedule_id, options_from_collection_for_select(@movie.schedules, :id, ->(schedule) { schedule.start_time.strftime('%H:%M') }), { prompt: "上映時間を選択してください。" }, class: "pl-3 pr-10 bg-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" %>
+    </div>
 
-   <%= f.submit '座席を予約する' %>
-<% end %>
+    <div class="w-full">
+      <%= f.submit '座席を予約する', class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border-r rounded" %>
+    </div>
+  <% end %>
+  </div>

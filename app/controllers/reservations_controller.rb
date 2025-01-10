@@ -39,24 +39,19 @@ class ReservationsController < ApplicationController
     end
 
     # バリデーションを実行し、失敗した場合はエラーを表示
-  if @reservation.valid?
-    if @reservation.save
-      flash[:notice] = '予約が完了しました。'
-      redirect_to movie_path(@movie.id, schedule_id: @reservation.schedule_id, date: @reservation.date)
+    if @reservation.valid?
+      if @reservation.save
+        flash[:notice] = '予約が完了しました。'
+        redirect_to movie_path(@movie.id, schedule_id: @reservation.schedule_id, date: @reservation.date)
+      else
+        flash.now[:error] = '予約に失敗しました'
+        render :new
+      end
     else
-      flash.now[:error] = '予約に失敗しました'
-      render :new
+      # バリデーションエラーの場合もリダイレクト
+      flash[:error] = @reservation.errors.full_messages.to_sentence
+      redirect_to request.referer
     end
-  else
-     # バリデーションエラーの場合もリダイレクト
-    flash[:error] = @reservation.errors.full_messages.to_sentence
-    redirect_to request.referer
-
-  end
-
-  rescue ActiveRecord::RecordNotFound
-    flash[:error] = '指定したリソースが見つかりません。'
-    redirect_to movie_reservation_path(@movie.id, schedule_id: @schedule.id, date: @reservation.date)
   end
 
   private

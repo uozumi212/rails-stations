@@ -2,9 +2,9 @@
   <div style="color: red;"><%= flash[:success] %></div>
 <% end %>
 
-<h2>管理者用映画一覧画面</h2>
+<h2 class="text-2xl text-center mb-2">管理者用映画一覧画面</h2>
 
-<table>
+<table class="mt-4">
   <thead>
     <tr>
       <th>映画のID</th>
@@ -21,24 +21,18 @@
   <tbody>
     <% @movies.each do |movie| %>
     <tr>
-      <td><%= movie.id %></td>
-      <td><%= movie.name %></td>
-      <td><%= movie.year %></td>
-      <td><%= movie.description %></td>
+      <td><a href="<%= admin_movie_path(movie.id) %>"><%= movie.id %></a></td>
+      <td><a href="<%= admin_movie_path(movie.id) %>"><%= movie.name %></a></td>
+      <td><a href="<%= admin_movie_path(movie.id) %>"><%= movie.year %></a></td>
+      <td><a href="<%= admin_movie_path(movie.id) %>"><%= movie.description %></a></td>
       <!-- <td><%= link_to "画像", movie.image_url, target: "_blank" %></td> -->
-      <td><img src="<%= movie.image_url %>" alt="<%= movie.name %>"></td>
-      <!-- <% @schedules.each do |collection| %>
-        <% collection.each do |schedule| %>
-        <% if schedule.present? %>
-        <td><%= schedule.start_time.year %></td>
-        <% end %>
-        <% end %>
-      <% end %> -->
+      <td><a href="<%= admin_movie_path(movie.id) %>"><img src="<%= movie.image_url %>" alt="<%= movie.name %>"></a></td>
+
       <td>
         <% if movie.is_showing == true %>
-        上映中
+        <a href="<%= admin_movie_path(movie.id) %>">上映中</a>
         <% else %>
-        上映予定
+        <a href="<%= admin_movie_path(movie.id) %>">上映予定</a>
         <% end %>
       </td>
       <td><%= movie.created_at %></td>

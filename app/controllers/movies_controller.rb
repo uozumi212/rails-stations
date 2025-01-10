@@ -57,14 +57,6 @@ class MoviesController < ApplicationController
 
     @sheets = Sheet.all.includes(:reservations)
     @reserved_sheets = @schedule.reservations.pluck(:sheet_id)
-
- rescue ArgumentError => e
-    Rails.logger.error "Date parsing error: #{e.message}"
-    flash[:error] = '日付の形式が正しくありません。'
-    redirect_to movie_path(@movie)
-
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = '指定したスケジュールが見つかりません。'
-      redirect_to movie_path(@movie), status: not_found
-    end
+    @reservations = Reservation.where(date: @date, schedule_id: @schedules.pluck(:id))
+  end
 end

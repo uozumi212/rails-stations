@@ -1,57 +1,67 @@
-<h1>座席予約</h1>
+<h1 class="text-center text-2xl mt-4">座席予約</h1>
 
-<% if flash[:error] %>
-  <div>
-    <%= flash[:error] %>
+<% flash.each do |type, message| %>
+  <div class="<%= type == 'error' ? 'bg-red-100 border-red-400 text-red-700' : 'bg-green-100 border-green-400 text-green-700' %> px-4 py-3 rounded relative mb-4 max-w-md mx-auto">
+    <%= message %>
   </div>
 <% end %>
 
-<% if flash[:alert] %>
-  <div class="alert alert-warning">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-
-
-<% if flash[:notice] %>
-  <div>
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-
-<%= form_with model: @reservation, url: reservations_path, method: :post, local: true do |f| %>
-   <% if !@movie.nil? %>
-    <div>
-        <strong>映画：</strong>
-      <%= f.text_field :movie_id, value: @movie.name, readonly: true %>
-      <%= f.hidden_field :movie_id, value: @movie.id %>
-    </div>
+<%= form_with model: @reservation, url: reservations_path, method: :post, local: true, class: "max-w-md mx-auto" do |f| %>
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <% if @movie.present? %>
+      <table class="w-full">
+        <tr>
+          <td class="font-bold">映画タイトル</td>
+          <td>
+            <%= f.text_field :movie_id, value: @movie.name, readonly: true, class: "bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+            <%= f.hidden_field :movie_id, value: @movie.id %>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2">上映時間</td>
+          <td class=" pt-2"><%= @schedule.start_time.strftime('%H:%M') %></td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2">座席番号</td>
+          <td class="pt-2">
+            <%= f.hidden_field :sheet_id, value: @sheet_id %>
+            <%= @reservation.sheet.row %>-<%= @reservation.sheet.column %>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2">上映日</td>
+          <td class="pt-2">
+            <%= f.hidden_field :date, value: @reservation.date %>
+            <%= @reservation.date.try(:strftime, '%Y-%m-%d') %>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2"><%= f.label :schedule_id, "上映開始時間" %></td>
+          <td class="pt-2">
+            <%= f.hidden_field :schedule_id, value: @schedule.id %>
+            <%= @schedule.start_time.strftime('%H:%M') %>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2"><%= f.label :name, '名前' %></td>
+          <td class="pt-2">
+            <%= f.hidden_field :schedule_id, value: @schedule.id %>
+            <%= f.text_field :name, value: current_user.name, required: true, readonly: true %>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-bold pt-2"><%= f.label :email, 'メールアドレス' %></td>
+          <td class="pt-2">
+            <%= f.hidden_field :schedule_id, value: @schedule.id %>
+            <%= f.text_field :email, value: current_user.email , required: true, readonly: true %>
+          </td>
+        </tr>
+      </table>
+      <div class="text-center mt-4">
+         <%= f.submit "予約する", class: "bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    <% else %>
+      <p>指定された日付のスケジュールがありません。</p>
     <% end %>
-
-  <div>
-  <%= f.label :schedule_id %>
-  <%= f.hidden_field :schedule_id, value: @schedule.id %>
-  <%= @schedule.start_time.strftime('%H:%M') %>
   </div>
-
-  <div>
-  <%= f.label :sheet_id %>
-  <%= f.hidden_field :sheet_id, value: @sheet_id %>
-  <%= @sheet_id %>
-  </div>
-
-  <div>
-  <%= f.label :date %>
-  <%= f.hidden_field :date, value: @date %>
-  <%= @reservation.date.try(:strftime, '%Y-%m-%d') %>
-  </div>
-
-
-  <%= f.label :name, '名前' %>
-  <%= f.text_field :name, value: current_user.name, required: true, readonly: true %>
-
-  <%= f.label :email, 'メールアドレス' %>
-  <%= f.text_field :email, value: current_user.email , required: true, readonly: true %>
-
-  <%= f.submit '座席を予約する' %>
 <% end %>

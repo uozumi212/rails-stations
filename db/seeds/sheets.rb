@@ -1,10 +1,13 @@
 puts "Create sheets"
 Sheet.destroy_all
 
-3.times do |n|
-  screen_id = n + 1
-Sheet.create([{ column: 1, row: 'a', screen_id: screen_id }, { column: 2, row: 'a', screen_id: screen_id  }, { column: 3, row: 'a', screen_id: screen_id  }, { column: 4, row: 'a', screen_id: screen_id  }, { column: 5, row: 'a', screen_id: screen_id  }])
-Sheet.create([{ column: 1, row: 'b', screen_id: screen_id }, { column: 2, row: 'b', screen_id: screen_id }, { column: 3, row: 'b', screen_id: screen_id }, { column: 4, row: 'b', screen_id: screen_id }, { column: 5, row: 'b', screen_id: screen_id }])
-Sheet.create([{ column: 1, row: 'c', screen_id: screen_id }, { column: 2, row: 'c', screen_id: screen_id }, { column: 3, row: 'c', screen_id: screen_id }, { column: 4, row: 'c', screen_id: screen_id }, { column: 5, row: 'c', screen_id: screen_id }])
+# screen_id = 1
+%w[1 2 3].each do |screen_id|
+  %w[a b c].each do |row|
+    (1..5).each do |column|
+      Sheet.create(column: column, row: row, screen_id: screen_id)
+    end
+  end
 end
-  puts "Sheet created successfully"
+
+ puts "Sheet created successfully"

@@ -10,10 +10,13 @@
     </tr>
       </thead>
     <tbody>
-     <% @sheets.group_by(&:row).each do |row, sheets| %>
+@sheets.group_by(&:row).each
+ do |row, sheets| %>
       <tr>
-        <% sheets.each do |sheet| %>
-          <td><%= "#{sheet.row}-#{sheet.column}" %></td>
+sheets.each
+ do |sheet| %>
+"#{sheet.row}-#{sheet.column}"
+ %></td>
         <% end %>
       </tr>
     <% end %>

@@ -1,11 +1,14 @@
-<h1>スケジュール一覧</h1>
+<h2 class="text-center text-2xl mt-4">管理者スケジュール一覧</h2>
 
 <% @movies.each do |movie| %>
 
 <% @schedules.each do |schedule| %>
   <% if schedule.movie_id == movie.id %>
-  <h2>id：<%= movie.id %>映画タイトル：<%= movie.name %></h2>
-  上映時間：<a href="<%= admin_schedule_path(schedule.id) %>"><%= schedule.start_time.strftime('%Y/%m/%d %H:%M') %> ~ <%= schedule.end_time.strftime('%Y/%m/%d %H:%M') %></a>
+  <div class="text-center">
+    <h2 class="mt-2">映画タイトル：<%= movie.name %></h2>
+    <h2>上映時間：<a href="<%= admin_schedule_path(schedule.id) %>"><%= schedule.start_time.strftime('%Y/%m/%d %H:%M') %> ~ <%= schedule.end_time.strftime('%Y/%m/%d %H:%M') %></a></h2>
+  </div>
+
   <% end %>
 <% end %>
 <% end %>

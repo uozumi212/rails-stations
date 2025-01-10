@@ -1,13 +1,18 @@
-<h2>管理者映画詳細画面</h2>
+<h2 class="text-center text-2xl mt-4">管理者映画詳細画面</h2>
 
-<p>映画タイトル：<%= @movie.name %></p>
+<div class="text-center mt-4">
+  <p class="text-xl font-bold">映画タイトル：<%= @movie.name %></p>
 <% @schedules.each do |schedule| %>
-<div>
+<div class="mt-2">
   開始時間：<a href="<%= admin_schedule_path(schedule.id) %>"><%= schedule.start_time.strftime('%Y/%m/%d %H:%M') %></a>
 </div>
-<div>
+<div class="mt-2">
   終了時間：<a href="<%= admin_schedule_path(schedule.id) %>"><%= schedule.end_time.strftime('%Y/%m/%d %H:%M') %></a>
 </div>
 
 <% end %>
-<%= link_to 'スケジュール新規登録', new_admin_movie_schedule_path(@movie.id) %>
+<div class="actions">
+  <%= link_to 'スケジュール新規登録', new_admin_movie_schedule_path(@movie.id) %>
+</div>
+
+</div>

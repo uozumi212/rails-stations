@@ -13,7 +13,8 @@
     "hook:pre-commit": "techtrain-railway hook:pre-commit",
     "hook:update": "simple-git-hooks",
     "prepare": "simple-git-hooks",
-    "postinstall": "mkdir -p .git/hooks && yarn hook:update && yarn login:techtrain"
+    "postinstall": "mkdir -p .git/hooks && yarn hook:update && yarn login:techtrain",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "simple-git-hooks": {
     "pre-commit": [
