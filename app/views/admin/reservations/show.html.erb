@@ -1,47 +1,37 @@
 <h2>予約詳細画面</h2>
-
 <%= form_with model: @reservation, url: admin_reservation_path(@reservation), method: :patch do |form| %>
   <div class="field">
     <%= form.label :movie_name, "映画名" %>
     <%= form.text_field :movie_name, value: @reservation.schedule.movie.name, disabled: true %>
   </div>
-
   <div class="field">
     <%= form.label :reservation_date, "予約日付" %>
     <%= form.text_field :reservation_date, value: @reservation.date.strftime("%Y-%m-%d %H:%M"), disabled: true %>
   </div>
-
-       <div>
-        <%= form.label :schedule_id, "予約開始時間" %>
-        <%= form.select :schedule_id, options_for_select([[@reservation.schedule.start_time.strftime("%H:%M"), @reservation.schedule.id]], @reservation.schedule.id) %>
-      </div>
-
-
+  <div>
+    <%= form.label :schedule_id, "予約開始時間" %>
+    <%= form.select :schedule_id, options_for_select([[@reservation.schedule.start_time.strftime("%H:%M"), @reservation.schedule.id]], @reservation.schedule.id) %>
+  </div>
   <div class="field">
     <%= form.label :sheet_id, "座席" %>
     <%= form.text_field :sheet_id, value: "#{@reservation.sheet.row}-#{@reservation.sheet.column}", disabled: true %>
   </div>
-
   <div class="field">
     <%= form.label :start_time, "映画開始" %>
     <%= form.text_field :start_time, value: @reservation.schedule.start_time.strftime("%H:%M"), disabled: true %>
   </div>
-
   <div class="field">
     <%= form.label :name, "予約者名" %>
     <%= form.text_field :name, value: @reservation.name %>
   </div>
-
   <div class="field">
     <%= form.label :email, "予約者メールアドレス" %>
     <%= form.email_field :email, value: @reservation.email %>
   </div>
-
   <div style="padding: 20px 0;">
     <%= form.submit '更新' %>
   </div>
 <% end %>
-
 <div style="padding: 20px 0;">
   <%= link_to '戻る', admin_movies_path %>
 </div>

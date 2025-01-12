@@ -2,11 +2,6 @@ class Admin::SchedulesController < ApplicationController
   before_action :set_schedule, only: [:edit, :update, :destroy]
   def index
     @schedules = Schedule.all
-
-    # @movies = []
-    # @schedules.each do |schedule|
-    #   @movies << schedule.movie
-    # end
     @movies = Movie.includes(:schedules).distinct
   end
   def show
@@ -42,12 +37,12 @@ class Admin::SchedulesController < ApplicationController
     @movie = Movie.find(params[:movie_id])
     @schedule = @movie.schedules.build(schedule_params)
 
-      if @schedule.save
-        flash[:notice] = 'スケジュールが登録されました。'
-        redirect_to admin_movies_path
-      else
-        render :new
-      end
+    if @schedule.save
+      flash[:notice] = 'スケジュールが登録されました。'
+      redirect_to admin_movies_path
+    else
+      render :new
+    end
   end
 
   def set_schedule

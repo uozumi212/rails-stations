@@ -1,6 +1,5 @@
 <h1 class="text-center"><%= @movie.name %></h1>
 <p class="text-center mt-2"><%= @date %></p>
-
 <% if @schedules.present? %>
   <% @schedules.each do |schedule| %>
     <p class="text-center mt-2">上映時間：<%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>

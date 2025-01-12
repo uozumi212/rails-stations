@@ -67,6 +67,8 @@ group :development do
 
   gem 'erb_lint', require: false
 
+  gem 'htmlbeautifier'
+
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 

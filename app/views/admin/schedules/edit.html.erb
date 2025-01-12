@@ -1,13 +1,8 @@
 <h2>スケジュール編集画面</h2>
-
 <%= form_for([:admin, @schedule]) do |f| %>
-
-<%= f.label :start_time, "開始時間" %>
-<%= f.datetime_select :start_time %>
-
-<%= f.label :end_time, "終了時間" %>
-<%= f.datetime_select :end_time %>
-
-<% f.submit %>
-
+  <%= f.label :start_time, "開始時間" %>
+  <%= f.datetime_select :start_time %>
+  <%= f.label :end_time, "終了時間" %>
+  <%= f.datetime_select :end_time %>
+  <% f.submit %>
 <% end %>

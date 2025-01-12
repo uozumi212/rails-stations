@@ -1,18 +1,16 @@
 <h2 class="text-center text-2xl mt-4">管理者用上映スケジュール新規登録</h2>
-
 <div class="text-center mt-4">
- <%= form_for([:admin, @movie, @schedule]) do |f| %>
- <%= f.hidden_field :movie_id, value: @movie.id %>
-  <h3 class="font-bold text-xl">映画タイトル：<%= @movie.name %></h3>
-  <div class="mt-2">
-    <%= f.label :start_time, "開始時間" %>
-    <%= f.datetime_field :start_time %>
-    <%= f.label :end_time, "終了時間" %>
-    <%= f.datetime_field :end_time %>
-
-    <div class="actions">
-      <%= f.submit "登録" %>
+  <%= form_for([:admin, @movie, @schedule]) do |f| %>
+    <%= f.hidden_field :movie_id, value: @movie.id %>
+    <h3 class="font-bold text-xl">映画タイトル：<%= @movie.name %></h3>
+    <div class="mt-2">
+      <%= f.label :start_time, "開始時間" %>
+      <%= f.datetime_field :start_time %>
+      <%= f.label :end_time, "終了時間" %>
+      <%= f.datetime_field :end_time %>
+      <div class="actions">
+        <%= f.submit "登録" %>
+      </div>
     </div>
-  </div>
- <% end %>
+  <% end %>
 </div>

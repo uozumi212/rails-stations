@@ -1,58 +1,43 @@
 <h2 class="text-center text-2xl mt-4">管理者予約追加</h2>
-
 <div style="padding: 10px">
   <% if flash[:error] %>
-  <div>
-    <%= flash[:error] %>
-  </div>
-<% end %>
-
-<% if flash[:alert] %>
-  <div class="alert alert-warning">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-
-
-<% if flash[:notice] %>
-  <div>
-    <%= flash[:notice] %>
-  </div>
-<% end %>
+    <div>
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="alert alert-warning">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+  <% if flash[:notice] %>
+    <div>
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
 </div>
-
-
 <%= form_with(model: [:admin, @reservation], url: admin_reservations_path(@movie), method: :post, local: true) do |f| %>
-
-
   <%= f.label :name, '予約者名前' %>
   <%= f.text_field :name, required: true %>
-
   <%= f.label :email, '予約者メールアドレス' %>
   <%= f.text_field :email, required: true %>
-
-<div>
-  <%= f.label :movie_id, "映画タイトル" %>
-  <%= f.select :movie_id, @movies, prompt: "映画を選択してください。" %>
-  </div>
-
   <div>
-  <%= f.label :date, "予約日付" %>
-  <%= f.select :date, @dates, prompt:  "予約日付を選択してください。" %>
+    <%= f.label :movie_id, "映画タイトル" %>
+    <%= f.select :movie_id, @movies, prompt: "映画を選択してください。" %>
   </div>
-
+  <div>
+    <%= f.label :date, "予約日付" %>
+    <%= f.select :date, @dates, prompt:  "予約日付を選択してください。" %>
+  </div>
   <div>
     <%= f.label :schedule_id, "予約開始時間" %>
     <%= f.select :schedule_id, @schedules, prompt:  "予約開始時間を選択してください。" %>
   </div>
-
-   <div>
-  <%= f.label :sheet, "座席" %>
-  <%= f.select :sheet_id, @sheets.map { |s| [s.row.to_s + "-" + s.column.to_s, s.id]}, prompt: "座席を選択してください。" %>
+  <div>
+    <%= f.label :sheet, "座席" %>
+    <%= f.select :sheet_id, @sheets.map { |s| [s.row.to_s + "-" + s.column.to_s, s.id]}, prompt: "座席を選択してください。" %>
   </div>
-
   <div style="padding: 10px 0;">
-      <%= f.submit '座席を予約する' %>
+    <%= f.submit '座席を予約する' %>
   </div>
-
 <% end %>

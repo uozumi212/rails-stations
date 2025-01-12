@@ -1,56 +1,48 @@
 <h2 class="text-center text-2xl mt-4">映画タイトル</h2>
-
 <%= form_with url: movies_path, method: :get, local: true, class: "max-w-md mx-auto" do |f| %>
   <div class="mt-4 text-center">
     <div class="field">
       <%= f.text_field :keyword, value: @keyword, placeholder: "映画タイトルを入力", class: "w-50 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" %>
     </div>
-
     <div class="mt-4 text-center">
       <%= f.radio_button :is_showing, '', checked: params[:is_showing].blank?, class: "form-radio ml-2" %>
       <%= f.label :is_showing_all, "全て" %>
-
       <%= f.radio_button :is_showing, 'true', checked: params[:is_showing] == 'true', class: "form-radio ml-2" %>
       <%= f.label :is_showing_true, "公開中" %>
-
       <%= f.radio_button :is_showing, 'false', checked: params[:is_showing] == 'false', class: "form-radio ml-2" %>
       <%= f.label :is_showing_false, "上映予定" %>
     </div>
-
     <div class="mt-4">
       <%= f.submit "検索", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     </div>
   </div>
 <% end %>
-
-
-
-  <div class="mt-4 flex flex-wrap">
-   <% @movies.each do |movie| %>
+<div class="mt-4 flex flex-wrap">
+  <% @movies.each do |movie| %>
     <div class="movie-list mx-auto border-b border-gray-200 py-4">
       <div class="flex">
-         <div class="w-1/2">
-        <a href="<%= movie_path(movie.id) %>"><img src="<%= movie.image_url %>" alt="<%= movie.name %>のポスター" class=""></a>
+        <div class="w-1/2">
+          <a href="<%= movie_path(movie.id) %>"><img src="<%= movie.image_url %>" alt="<%= movie.name %>のポスター" class=""></a>
+        </div>
+        <div class="1/2">
+          <p>
+            Title:<a href="<%= movie_path(movie.id) %>"><%= movie.name %></a>
+          </p>
+          <p>
+            公開年：<a href="<%= movie_path(movie.id) %>"><%= movie.year %></a>
+          </p>
+          <p>
+            コメント：<a href="<%= movie_path(movie.id) %>"><%= movie.description %></a>
+          </p>
+          <p>
+            <% if movie.is_showing? %>
+              <a href="<%= movie_path(movie.id) %>">上映中</a>
+            <% else %>
+              <a href="<%= movie_path(movie.id) %>">上映予定</a>
+            <% end %>
+          </p>
+        </div>
       </div>
-     <div class="1/2">
-      <p>
-          Title:<a href="<%= movie_path(movie.id) %>"><%= movie.name %></a>
-      </p>
-      <p>
-          公開年：<a href="<%= movie_path(movie.id) %>"><%= movie.year %></a>
-      </p>
-      <p>
-        コメント：<a href="<%= movie_path(movie.id) %>"><%= movie.description %></a>
-      </p>
-      <p>
-        <% if movie.is_showing? %>
-          <a href="<%= movie_path(movie.id) %>">上映中</a>
-        <% else %>
-          <a href="<%= movie_path(movie.id) %>">上映予定</a>
-        <% end %>
-      </p>
-     </div>
-      </div>
-    <div>
+    </div>
   <% end %>
 </div>

@@ -1,0 +1,20 @@
+{
+  "i18n-ally.localesPaths": [
+    "config/locales"
+  ],
+  "files.associations": {
+    "*.html.erb": "erb"
+  },
+  "[erb]": {
+    "editor.defaultFormatter": "aliariff.vscode-erb-beautify",
+    "editor.formatOnSave": true
+  },
+  "emmet.includeLanguages": {
+    "ruby": "html",
+    "erb": "html"
+  },
+  "vscode-erb-beautify.customEnvVar": {
+  "LC_ALL": "en_US.UTF-8"
+  },
+  "vscode-erb-beautify.useBundler": true
+}
