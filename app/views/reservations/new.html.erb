@@ -1,11 +1,9 @@
 <h1 class="text-center text-2xl mt-4">座席予約</h1>
-
 <% flash.each do |type, message| %>
   <div class="<%= type == 'error' ? 'bg-red-100 border-red-400 text-red-700' : 'bg-green-100 border-green-400 text-green-700' %> px-4 py-3 rounded relative mb-4 max-w-md mx-auto">
     <%= message %>
   </div>
 <% end %>
-
 <%= form_with model: @reservation, url: reservations_path, method: :post, local: true, class: "max-w-md mx-auto" do |f| %>
   <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <% if @movie.present? %>
@@ -58,7 +56,7 @@
         </tr>
       </table>
       <div class="text-center mt-4">
-         <%= f.submit "予約する", class: "bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded" %>
+        <%= f.submit "予約する", class: "bg-blue-500 hover:bg-blue-700 cursor-pointer text-white font-bold py-2 px-4 rounded" %>
       </div>
     <% else %>
       <p>指定された日付のスケジュールがありません。</p>

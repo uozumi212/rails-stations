@@ -53,9 +53,11 @@ class MoviesController < ApplicationController
         flash[:error] = '指定したスケジュールが見つかりません。'
         redirect_to movie_path(@movie)
         return
-      end
+     end
 
-    @sheets = Sheet.all.includes(:reservations)
+    # @sheets = Sheet.all.includes(:reservations)
+    @screen = Screen.first
+    @sheets = @screen.sheets.order(:row, :column)
     @reserved_sheets = @schedule.reservations.pluck(:sheet_id)
     @reservations = Reservation.where(date: @date, schedule_id: @schedules.pluck(:id))
   end

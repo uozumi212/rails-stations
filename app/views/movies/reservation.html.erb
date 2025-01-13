@@ -2,29 +2,30 @@
 <p class="text-center mt-2"><%= @date %></p>
 <% if @schedules.present? %>
   <% @schedules.each do |schedule| %>
-    <p class="text-center mt-2">上映時間：<%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>
-    <table class="m-auto mt-4 sheet-table">
+    <p class="text-center mt-4">上映時間：<%= schedule.start_time.strftime('%H:%M') %> - <%= schedule.end_time.strftime('%H:%M') %></p>
+    <table class="m-auto mt-2 sheet-table">
       <% @sheets.each_slice(5).with_index do |sheet_group, group_index| %>
-        <tr>
-          <% sheet_group.each do |sheet| %>
-            <% seat_number = "#{sheet.row}-#{sheet.column}" %>
-            <% if @reservations.exists?(schedule_id: schedule.id, sheet_id: sheet.id) %>
-              <td class="reserved">
-                <span><%= seat_number %></span>
-              </td>
-            <% else %>
-              <td>
-                <%= link_to seat_number, new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id, date: @date, sheet_id: sheet.id, screen_id: sheet.screen_id), class: "sheet-font" %>
-              </td>
+        <%# <% @sheets.where(screen_id: @sheets.screen_id).each_slice(5).with_index do |sheet_group, group_index| %> %>
+          <tr>
+            <% sheet_group.each do |sheet| %>
+              <% seat_number = "#{sheet.row}-#{sheet.column}" %>
+              <% if @reservations.exists?(schedule_id: schedule.id, sheet_id: sheet.id) %>
+                <td class="reserved">
+                  <span><%= seat_number %></span>
+                </td>
+              <% else %>
+                <td>
+                  <%= link_to seat_number, new_movie_schedule_reservation_path(movie_id: @movie.id, schedule_id: schedule.id, date: @date, sheet_id: sheet.id, screen_id: sheet.screen_id), class: "sheet-font" %>
+                </td>
+              <% end %>
             <% end %>
-          <% end %>
-          <% (5 - sheet_group.size).times do %>
-            <td></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </table>
+            <% (5 - sheet_group.size).times do %>
+              <td></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% else %>
+    <p>指定された日付のスケジュールがありません。</p>
   <% end %>
-<% else %>
-  <p>指定された日付のスケジュールがありません。</p>
-<% end %>
