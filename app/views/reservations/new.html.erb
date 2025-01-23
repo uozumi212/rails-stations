@@ -16,8 +16,15 @@
           </td>
         </tr>
         <tr>
+          <td class="font-bold">劇場</td>
+          <td>
+            <%= f.text_field :theater_id, value: @theater.name %>
+            <%= f.hidden_field :theater_id, value: @theater.id %>
+          </td>
+        </tr>
+        <tr>
           <td class="font-bold pt-2">上映時間</td>
-          <td class=" pt-2"><%= @schedule.start_time.strftime('%H:%M') %></td>
+          <td class="pt-2"><%= @schedule.start_time.strftime('%H:%M') %></td>
         </tr>
         <tr>
           <td class="font-bold pt-2">座席番号</td>

@@ -1,8 +1,10 @@
 class ReservationsController < ApplicationController
-
   def new
+    # 選択されたmovie.idからMovieモデルを検索し、@movieに代入
     @movie = Movie.find_by(id: params[:movie_id])
+    # 選択されたschedule.idからScheduleモデルを検索して、@scheduleに代入
     @schedule = Schedule.find_by(id: params[:schedule_id])
+    @theater = Theater.find_by(id: params[:theater_id])
 
     unless @movie && @schedule
       redirect_to movies_path, alert: "映画またはスケジュールを選択してください"
@@ -26,12 +28,15 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
+    @theater_id = params[:reservation][:theater_id]
     @schedule = Schedule.find(params[:reservation][:schedule_id])
     @sheet = Sheet.find(params[:reservation][:sheet_id])
     @movie = @schedule.movie
-    @screen_id = @sheet.screen_id
+    @screen = @schedule.screen
+    @reservation.screen = @screen
 
-    existing_reservation = Reservation.find_by(schedule: @schedule, sheet: @sheet)
+    existing_reservation = Reservation.find_by(schedule: @schedule, sheet: @sheet, screen: @screen,
+                                               theater_id: @theater)
 
     if existing_reservation
       flash[:error] = '指定した座席は既に予約されています。'
@@ -56,8 +61,7 @@ class ReservationsController < ApplicationController
 
   private
 
-
   def reservation_params
-    params.require(:reservation).permit(:schedule_id, :sheet_id, :date, :name, :email)
+    params.require(:reservation).permit(:schedule_id, :sheet_id, :theater_id, :screen_id, :date, :name, :email)
   end
 end

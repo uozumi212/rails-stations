@@ -33,6 +33,10 @@
       <%= f.label :schedule_id, "上映時間を選択：", class: "font-medium text-gray-700" %>
       <%= f.select :schedule_id, options_from_collection_for_select(@movie.schedules, :id, ->(schedule) { schedule.start_time.strftime('%H:%M') }), { prompt: "上映時間を選択してください。" }, class: "pl-3 pr-10 bg-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" %>
     </div>
+    <div class="mb-4 flex justify-center">
+      <%= f.label :theater_id, "映画館を選択：", class: "font-medium text-gray-700" %>
+      <%= f.select :theater_id, options_from_collection_for_select(@theaters, :id, :name, { prompt: "劇場を選択してください。" }), class: "pl-3 pr-10 bg-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" %>
+    </div>
     <div class="w-full">
       <%= f.submit '座席を予約する', class: "bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 border-r rounded" %>
     </div>

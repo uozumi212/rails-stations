@@ -5,14 +5,15 @@ class Movie < ApplicationRecord
   validates :image_url, presence: true
 
   has_many :schedules, dependent: :destroy
+  has_many :movies_theaters
 
   scope :search, ->(keyword) {
     where("name LIKE :keyword OR description LIKE :keyword", keyword: "%#{keyword}%")
   }
 
-
   scope :by_showing_status, ->(status) {
     return all if status.blank?
+
     where(is_showing: status == "true")
   }
 end
